@@ -60,7 +60,6 @@
             font-size: 0.9em;
             display: flex;
             align-items: center;
-            justify-content: space-between;
         }
 
         .password::before {
@@ -88,13 +87,16 @@
             border-radius: 5px;
         }
 
+        .contact-footer a {
+            color: white;
+            text-decoration: underline;
+        }
+
         .language-switcher {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 1000;
-            display: flex;
-            gap: 10px;
         }
 
         .lang-btn {
@@ -134,17 +136,11 @@
         <div class="card-container">
             <div class="card">
                 <a href="https://s.wsxc.cn/FKDuwD" target="_blank" data-pwd="888888">Shoes Collection 1</a>
-                <div class="password">
-                    <span data-translate="password"></span>
-                    <span>888888</span>
-                </div>
+                <div class="password">Password: 888888</div>
             </div>
             <div class="card">
                 <a href="https://sneakerheads.x.yupoo.com" target="_blank" data-pwd="888888">Sneakerheads Gallery</a>
-                <div class="password">
-                    <span data-translate="password"></span>
-                    <span>888888</span>
-                </div>
+                <div class="password">Password: 888888</div>
             </div>
         </div>
 
@@ -153,17 +149,11 @@
         <div class="card-container">
             <div class="card">
                 <a href="https://npccf.x.yupoo.com/" target="_blank" data-pwd="888999">Fashion Collection 1</a>
-                <div class="password">
-                    <span data-translate="password"></span>
-                    <span>888999</span>
-                </div>
+                <div class="password">Password: 888999</div>
             </div>
             <div class="card">
                 <a href="https://k-kgvcch123.x.yupoo.com/albums" target="_blank" data-pwd="666888">Premium Apparel</a>
-                <div class="password">
-                    <span data-translate="password"></span>
-                    <span>666888</span>
-                </div>
+                <div class="password">Password: 666888</div>
             </div>
         </div>
 
@@ -172,13 +162,11 @@
         <div class="card-container">
             <div class="card">
                 <a href="https://bag001.x.yupoo.com" target="_blank" data-pwd="888999">Designer Bags 1</a>
-                <div class="password">
-                    <span data-translate="password"></span>
-                    <span>888999</span>
-                </div>
+                <div class="password">Password: 888999</div>
             </div>
             <div class="card">
-                <a href="https://bag002.x.yupoo.com/albums" target="_blank">Luxury Collection</a>
+                <a href="https://bag002.x.yupoo.com/albums" target="_blank" data-pwd="888999">Luxury Collection</a>
+                <div class="password">Password: 888999</div>
             </div>
         </div>
 
@@ -187,10 +175,7 @@
         <div class="card-container">
             <div class="card">
                 <a href="https://dsmcp.x.yupoo.com" target="_blank" data-pwd="888889">Fashion Accessories</a>
-                <div class="password">
-                    <span data-translate="password"></span>
-                    <span>888889</span>
-                </div>
+                <div class="password">Password: 888889</div>
             </div>
             <div class="card">
                 <a href="https://jifan01.x.yupoo.com" target="_blank">Premium Belts</a>
@@ -199,9 +184,15 @@
 
         <div class="contact-footer">
             <h3 data-translate="contact.title"></h3>
-            <p>Email: zhengxhhy@foxmail.com</p>
-            <p data-translate="contact.wechat"></p>
-            <p data-translate="contact.whatsapp"></p>
+            <p>
+                <a href="mailto:zhengxhhy@foxmail.com">Email: zhengxhhy@foxmail.com</a>
+            </p>
+            <p>
+                <a href="weixin://dl/chat?xinruisneakers" data-translate="contact.wechat"></a>
+            </p>
+            <p>
+                <a href="https://wa.me/85297259272" data-translate="contact.whatsapp"></a>
+            </p>
         </div>
     </div>
 
@@ -212,55 +203,65 @@
 const translations = {
     'zh': {
         title: '新锐潮鞋（XinRui）',
-        'category.shoes': '热门鞋款',
-        'category.clothing': '时尚服饰',
-        'category.bags': '奢侈箱包',
-        'category.accessories': '潮流配饰',
+        'category.shoes': '鞋子',
+        'category.clothing': '衣服',
+        'category.bags': '奢侈品包',
+        'category.accessories': '配饰',
         'password': '密码：',
         'contact.title': '联系方式',
         'contact.wechat': '微信：xinruisneakers',
         'contact.whatsapp': 'WhatsApp：+852 97259272',
-        'copy_success': '访问密码已复制',
-        'confirm_jump': '即将跳转，确定继续？'
+        'copy_success': '密码已复制'
     },
     'en': {
         title: 'XinRui Trendy Shoes',
-        'category.shoes': 'Popular Shoes',
-        'category.clothing': 'Fashion Clothing',
+        'category.shoes': 'Shoes',
+        'category.clothing': 'Clothing',
         'category.bags': 'Luxury Bags',
-        'category.accessories': 'Stylish Accessories',
+        'category.accessories': 'Accessories',
         'password': 'Password: ',
         'contact.title': 'Contact Information',
         'contact.wechat': 'WeChat: xinruisneakers',
         'contact.whatsapp': 'WhatsApp: +852 97259272',
-        'copy_success': 'Access password copied',
-        'confirm_jump': 'Ready to redirect. Continue?'
+        'copy_success': 'Password copied'
     },
     'pt': {
         title: 'Sapatos da Moda XinRui',
-        'category.shoes': 'Sapatos Populares',
-        'category.clothing': 'Roupas Modernas',
+        'category.shoes': 'Sapatos',
+        'category.clothing': 'Roupas',
         'category.bags': 'Bolsas de Luxo',
-        'category.accessories': 'Acessórios Estilosos',
+        'category.accessories': 'Acessórios',
         'password': 'Senha: ',
         'contact.title': 'Contato',
         'contact.wechat': 'WeChat: xinruisneakers',
         'contact.whatsapp': 'WhatsApp: +852 97259272',
-        'copy_success': 'Senha de acesso copiada',
-        'confirm_jump': 'Pronto para redirecionar. Continuar?'
+        'copy_success': 'Senha copiada'
     }
 };
 
-// 自动语言检测
+// 自动检测语言逻辑
 function detectLanguage() {
     const savedLang = localStorage.getItem('userLanguage');
     if (savedLang && savedLang !== 'auto') return savedLang;
     
-    const browserLang = (navigator.language || navigator.userLanguage).toLowerCase();
-    if (browserLang.startsWith('zh')) return 'zh';
-    if (browserLang.startsWith('en')) return 'en';
-    if (browserLang.startsWith('pt')) return 'pt';
-    return 'en';
+    const browserLang = navigator.language || navigator.userLanguage;
+    const langCodes = ['zh', 'en', 'pt'];
+    
+    // 优先匹配完整代码 (如 zh-CN)
+    const exactMatch = langCodes.find(code => browserLang.toLowerCase() === code);
+    if (exactMatch) return exactMatch;
+    
+    // 匹配主语言代码 (如 pt-BR → pt)
+    const mainLang = browserLang.split('-')[0];
+    return langCodes.includes(mainLang) ? mainLang : 'en';
+}
+
+// 显示复制提示
+function showCopyNotice(message) {
+    const notice = document.getElementById('copyNotice');
+    notice.textContent = message;
+    notice.style.display = 'block';
+    setTimeout(() => notice.style.display = 'none', 2000);
 }
 
 // 密码处理系统
@@ -272,9 +273,8 @@ document.querySelectorAll('a[data-pwd]').forEach(link => {
         
         try {
             await navigator.clipboard.writeText(password);
-            if (confirm(translations[lang]['copy_success'])) {
-                window.open(link.href, '_blank');
-            }
+            showCopyNotice(translations[lang]['copy_success']);
+            window.open(link.href, '_blank'); // 自动跳转
         } catch (err) {
             prompt(translations[lang]['password'].split(':')[0], password);
             window.open(link.href, '_blank');
