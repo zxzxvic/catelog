@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XinRui Trendy Shoes</title>
+    <title>新锐潮鞋（XinRui）</title>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -41,11 +41,18 @@
             padding: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
-            position: relative;
         }
 
         .card:hover {
             transform: translateY(-5px);
+        }
+
+        .card a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 10px;
         }
 
         .password {
@@ -56,18 +63,29 @@
             justify-content: space-between;
         }
 
-        .copy-btn {
-            background: var(--secondary-color);
-            color: white;
-            border: none;
-            padding: 3px 10px;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: opacity 0.3s;
+        .password::before {
+            content: "🔒";
+            margin-right: 5px;
         }
 
-        .copy-btn:hover {
-            opacity: 0.9;
+        .copy-notice {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--secondary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .contact-footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 5px;
         }
 
         .language-switcher {
@@ -79,7 +97,25 @@
             gap: 10px;
         }
 
-        /* 保持其他样式不变... */
+        .lang-btn {
+            background: white;
+            border: 2px solid var(--primary-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        @media (min-width: 768px) {
+            .card-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
     </style>
 </head>
 <body>
@@ -91,29 +127,88 @@
     </div>
 
     <div class="container">
-        <h1 data-translate="title">XinRui Trendy Shoes</h1>
-
-        <!-- 优化后的分类结构 -->
-        <div class="main-menu">
-            <h2 class="category-title" data-translate="category.shoes"></h2>
-            <div class="card-container">
-                <div class="card">
-                    <a href="https://s.wsxc.cn/FKDuwD" target="_blank">Shoes Collection 1</a>
-                    <div class="password" data-password="888888">
-                        <span class="pwd-prefix"></span>
-                        <span class="pwd-text">888888</span>
-                        <button class="copy-btn" data-translate="copy">Copy</button>
-                    </div>
+        <h1 data-translate="title">新锐潮鞋（XinRui）</h1>
+        
+        <!-- Shoes Section -->
+        <h2 class="category-title" data-translate="category.shoes"></h2>
+        <div class="card-container">
+            <div class="card">
+                <a href="https://s.wsxc.cn/FKDuwD" target="_blank" data-pwd="888888">Shoes Collection 1</a>
+                <div class="password">
+                    <span data-translate="password"></span>
+                    <span>888888</span>
                 </div>
-                <!-- 其他商品卡片结构类似... -->
+            </div>
+            <div class="card">
+                <a href="https://sneakerheads.x.yupoo.com" target="_blank" data-pwd="888888">Sneakerheads Gallery</a>
+                <div class="password">
+                    <span data-translate="password"></span>
+                    <span>888888</span>
+                </div>
             </div>
         </div>
 
-        <!-- 其他分类区块结构相同... -->
+        <!-- Clothing Section -->
+        <h2 class="category-title" data-translate="category.clothing"></h2>
+        <div class="card-container">
+            <div class="card">
+                <a href="https://npccf.x.yupoo.com/" target="_blank" data-pwd="888999">Fashion Collection 1</a>
+                <div class="password">
+                    <span data-translate="password"></span>
+                    <span>888999</span>
+                </div>
+            </div>
+            <div class="card">
+                <a href="https://k-kgvcch123.x.yupoo.com/albums" target="_blank" data-pwd="666888">Premium Apparel</a>
+                <div class="password">
+                    <span data-translate="password"></span>
+                    <span>666888</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Luxury Bags Section -->
+        <h2 class="category-title" data-translate="category.bags"></h2>
+        <div class="card-container">
+            <div class="card">
+                <a href="https://bag001.x.yupoo.com" target="_blank" data-pwd="888999">Designer Bags 1</a>
+                <div class="password">
+                    <span data-translate="password"></span>
+                    <span>888999</span>
+                </div>
+            </div>
+            <div class="card">
+                <a href="https://bag002.x.yupoo.com/albums" target="_blank">Luxury Collection</a>
+            </div>
+        </div>
+
+        <!-- Accessories Section -->
+        <h2 class="category-title" data-translate="category.accessories"></h2>
+        <div class="card-container">
+            <div class="card">
+                <a href="https://dsmcp.x.yupoo.com" target="_blank" data-pwd="888889">Fashion Accessories</a>
+                <div class="password">
+                    <span data-translate="password"></span>
+                    <span>888889</span>
+                </div>
+            </div>
+            <div class="card">
+                <a href="https://jifan01.x.yupoo.com" target="_blank">Premium Belts</a>
+            </div>
+        </div>
+
+        <div class="contact-footer">
+            <h3 data-translate="contact.title"></h3>
+            <p>Email: your.email@example.com</p>
+            <p data-translate="contact.wechat"></p>
+            <p data-translate="contact.whatsapp"></p>
+        </div>
     </div>
 
+    <div class="copy-notice" id="copyNotice"></div>
+
 <script>
-// 精简后的多语言数据
+// 三语种配置
 const translations = {
     'zh': {
         title: '新锐潮鞋（XinRui）',
@@ -121,17 +216,25 @@ const translations = {
         'category.clothing': '时尚服饰',
         'category.bags': '奢侈箱包',
         'category.accessories': '潮流配饰',
-        'copy': '复制密码',
-        'copied': '已复制！'
+        'password': '密码：',
+        'contact.title': '联系方式',
+        'contact.wechat': '微信：YourWeChatID',
+        'contact.whatsapp': 'WhatsApp：+86 123 4567 8901',
+        'copy_success': '访问密码已复制',
+        'confirm_jump': '即将跳转，确定继续？'
     },
     'en': {
         title: 'XinRui Trendy Shoes',
-        'category.shoes': 'Hot Shoes',
+        'category.shoes': 'Popular Shoes',
         'category.clothing': 'Fashion Clothing',
         'category.bags': 'Luxury Bags',
         'category.accessories': 'Stylish Accessories',
-        'copy': 'Copy',
-        'copied': 'Copied!'
+        'password': 'Password: ',
+        'contact.title': 'Contact Information',
+        'contact.wechat': 'WeChat: YourWeChatID',
+        'contact.whatsapp': 'WhatsApp: +86 123 4567 8901',
+        'copy_success': 'Access password copied',
+        'confirm_jump': 'Ready to redirect. Continue?'
     },
     'pt': {
         title: 'Sapatos da Moda XinRui',
@@ -139,55 +242,70 @@ const translations = {
         'category.clothing': 'Roupas Modernas',
         'category.bags': 'Bolsas de Luxo',
         'category.accessories': 'Acessórios Estilosos',
-        'copy': 'Copiar',
-        'copied': 'Copiado!'
+        'password': 'Senha: ',
+        'contact.title': 'Contato',
+        'contact.wechat': 'WeChat: YourWeChatID',
+        'contact.whatsapp': 'WhatsApp: +86 123 4567 8901',
+        'copy_success': 'Senha de acesso copiada',
+        'confirm_jump': 'Pronto para redirecionar. Continuar?'
     }
 };
 
-// 增强版复制功能
-function initCopyButtons() {
-    document.querySelectorAll('.copy-btn').forEach(btn => {
-        btn.onclick = (e) => {
-            const password = e.target.closest('.password').querySelector('.pwd-text').textContent;
-            navigator.clipboard.writeText(password).then(() => {
-                const msg = document.createElement('div');
-                msg.textContent = translations[currentLang].copied;
-                msg.style.position = 'fixed';
-                msg.style.bottom = '20px';
-                msg.style.right = '20px';
-                msg.style.background = 'var(--secondary-color)';
-                msg.style.color = 'white';
-                msg.style.padding = '10px 20px';
-                msg.style.borderRadius = '5px';
-                document.body.appendChild(msg);
-                setTimeout(() => msg.remove(), 2000);
-            });
+// 自动语言检测
+function detectLanguage() {
+    const savedLang = localStorage.getItem('userLanguage');
+    if (savedLang && savedLang !== 'auto') return savedLang;
+    
+    const browserLang = (navigator.language || navigator.userLanguage).toLowerCase();
+    if (browserLang.startsWith('zh')) return 'zh';
+    if (browserLang.startsWith('en')) return 'en';
+    if (browserLang.startsWith('pt')) return 'pt';
+    return 'en';
+}
+
+// 密码处理系统
+document.querySelectorAll('a[data-pwd]').forEach(link => {
+    link.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const lang = currentLang;
+        const password = link.dataset.pwd;
+        
+        try {
+            await navigator.clipboard.writeText(password);
+            if (confirm(translations[lang]['copy_success'])) {
+                window.open(link.href, '_blank');
+            }
+        } catch (err) {
+            prompt(translations[lang]['password'].split(':')[0], password);
+            window.open(link.href, '_blank');
         }
     });
-}
+});
 
-// 优化后的语言切换逻辑
-let currentLang = 'en';
+// 语言管理系统
+let currentLang = detectLanguage();
 function applyLanguage(langCode) {
-    currentLang = langCode;
-    const langData = translations[langCode];
+    currentLang = langCode === 'auto' ? detectLanguage() : langCode;
+    document.documentElement.lang = currentLang;
     
-    // 更新文本内容
+    // 更新所有翻译文本
     document.querySelectorAll('[data-translate]').forEach(el => {
         const key = el.dataset.translate;
-        el.textContent = langData[key] || el.textContent;
+        el.textContent = translations[currentLang][key] || el.textContent;
     });
-
-    // 更新密码前缀
-    document.querySelectorAll('.pwd-prefix').forEach(el => {
-        el.textContent = langData.password ? langData.password : 'Password: ';
-    });
-
-    // 初始化按钮
-    initCopyButtons();
 }
 
-// 保持其他核心函数不变...
+function changeLanguage(langCode) {
+    if (langCode === 'auto') {
+        localStorage.removeItem('userLanguage');
+    } else {
+        localStorage.setItem('userLanguage', langCode);
+    }
+    applyLanguage(langCode);
+}
+
+// 初始化
+document.addEventListener('DOMContentLoaded', () => applyLanguage(detectLanguage()));
 </script>
 </body>
 </html>
