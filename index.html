@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="mul">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XinRui Trendy Shoes</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f6fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .category-title {
+            color: var(--primary-color);
+            border-left: 5px solid var(--secondary-color);
+            padding-left: 15px;
+            margin: 40px 0 20px;
+        }
+
+        .card-container {
+            display: grid;
+            grid-gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .password {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .copy-btn {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 3px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .copy-btn:hover {
+            opacity: 0.9;
+        }
+
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        /* 保持其他样式不变... */
+    </style>
+</head>
+<body>
+    <div class="language-switcher">
+        <button class="lang-btn" onclick="changeLanguage('auto')">🌐</button>
+        <button class="lang-btn" onclick="changeLanguage('zh')">中文</button>
+        <button class="lang-btn" onclick="changeLanguage('en')">English</button>
+        <button class="lang-btn" onclick="changeLanguage('pt')">Português</button>
+    </div>
+
+    <div class="container">
+        <h1 data-translate="title">XinRui Trendy Shoes</h1>
+
+        <!-- 优化后的分类结构 -->
+        <div class="main-menu">
+            <h2 class="category-title" data-translate="category.shoes"></h2>
+            <div class="card-container">
+                <div class="card">
+                    <a href="https://s.wsxc.cn/FKDuwD" target="_blank">Shoes Collection 1</a>
+                    <div class="password" data-password="888888">
+                        <span class="pwd-prefix"></span>
+                        <span class="pwd-text">888888</span>
+                        <button class="copy-btn" data-translate="copy">Copy</button>
+                    </div>
+                </div>
+                <!-- 其他商品卡片结构类似... -->
+            </div>
+        </div>
+
+        <!-- 其他分类区块结构相同... -->
+    </div>
+
+<script>
+// 精简后的多语言数据
+const translations = {
+    'zh': {
+        title: '新锐潮鞋（XinRui）',
+        'category.shoes': '热门鞋款',
+        'category.clothing': '时尚服饰',
+        'category.bags': '奢侈箱包',
+        'category.accessories': '潮流配饰',
+        'copy': '复制密码',
+        'copied': '已复制！'
+    },
+    'en': {
+        title: 'XinRui Trendy Shoes',
+        'category.shoes': 'Hot Shoes',
+        'category.clothing': 'Fashion Clothing',
+        'category.bags': 'Luxury Bags',
+        'category.accessories': 'Stylish Accessories',
+        'copy': 'Copy',
+        'copied': 'Copied!'
+    },
+    'pt': {
+        title: 'Sapatos da Moda XinRui',
+        'category.shoes': 'Sapatos Populares',
+        'category.clothing': 'Roupas Modernas',
+        'category.bags': 'Bolsas de Luxo',
+        'category.accessories': 'Acessórios Estilosos',
+        'copy': 'Copiar',
+        'copied': 'Copiado!'
+    }
+};
+
+// 增强版复制功能
+function initCopyButtons() {
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.onclick = (e) => {
+            const password = e.target.closest('.password').querySelector('.pwd-text').textContent;
+            navigator.clipboard.writeText(password).then(() => {
+                const msg = document.createElement('div');
+                msg.textContent = translations[currentLang].copied;
+                msg.style.position = 'fixed';
+                msg.style.bottom = '20px';
+                msg.style.right = '20px';
+                msg.style.background = 'var(--secondary-color)';
+                msg.style.color = 'white';
+                msg.style.padding = '10px 20px';
+                msg.style.borderRadius = '5px';
+                document.body.appendChild(msg);
+                setTimeout(() => msg.remove(), 2000);
+            });
+        }
+    });
+}
+
+// 优化后的语言切换逻辑
+let currentLang = 'en';
+function applyLanguage(langCode) {
+    currentLang = langCode;
+    const langData = translations[langCode];
+    
+    // 更新文本内容
+    document.querySelectorAll('[data-translate]').forEach(el => {
+        const key = el.dataset.translate;
+        el.textContent = langData[key] || el.textContent;
+    });
+
+    // 更新密码前缀
+    document.querySelectorAll('.pwd-prefix').forEach(el => {
+        el.textContent = langData.password ? langData.password : 'Password: ';
+    });
+
+    // 初始化按钮
+    initCopyButtons();
+}
+
+// 保持其他核心函数不变...
+</script>
+</body>
+</html>
