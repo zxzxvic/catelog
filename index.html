@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="mul">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>潮鞋 & 奢品精选</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Day Mode (Light) */
+            --bg-primary: #fafafa;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --accent: #1a1a1a;
+            --accent-light: #f0f0f0;
+            --border: #e5e5e5;
+            --shadow: 0 4px 20px rgba(0,0,0,0.06);
+            --shadow-hover: 0 8px 30px rgba(0,0,0,0.1);
+            --card-radius: 16px;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            /* Night Mode (Dark) */
+            --bg-primary: #0a0a0f;
+            --bg-card: #12121a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: #00f5d4;
+            --accent-light: #1a1a2e;
+            --border: #1f1f2e;
+            --shadow: 0 4px 20px rgba(0,0,0,0.4);
+            --shadow-hover: 0 8px 40px rgba(0,245,212,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        /* ===== TOPBAR ===== */
+        .topbar {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 8px;
+            z-index: 100;
+        }
+
+        .lang-btn,
+        .theme-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: var(--transition);
+            color: var(--text-secondary);
+        }
+
+        .lang-btn:hover,
+        .theme-btn:hover,
+        .lang-btn.active {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            padding: 80px 24px 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            background: radial-gradient(ellipse at center, var(--accent) 0%, transparent 70%);
+            opacity: 0.06;
+            pointer-events: none;
+        }
+
+        .logo {
+            font-size: clamp(48px, 10vw, 72px);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .announcement {
+            max-width: 600px;
+            margin: 0 auto 0;
+            padding: 12px 20px;
+            background: var(--accent-light);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        [data-theme="dark"] .logo {
+            background: linear-gradient(135deg, #ffffff 0%, #00f5d4 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-size: 18px;
+            color: var(--text-secondary);
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+        }
+
+        /* ===== CATEGORY SECTION ===== */
+        .category {
+            margin-bottom: 60px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .category-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-light);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        [data-theme="dark"] .category-icon {
+            background: linear-gradient(135deg, rgba(0,245,212,0.1) 0%, rgba(0,245,212,0.05) 100%);
+            border-color: rgba(0,245,212,0.2);
+        }
+
+        .category-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            flex-shrink: 0;
+        }
+
+        /* ===== CARD GRID ===== */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            position: relative;
+            height: 220px;
+            border-radius: var(--card-radius);
+            overflow: hidden;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            transition: var(--transition);
+        }
+
+        .card:hover .card-bg {
+            transform: scale(1.05);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(0,0,0,0.1) 0%,
+                rgba(0,0,0,0.7) 100%
+            );
+            z-index: 1;
+        }
+
+        .card-content {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            z-index: 2;
+            color: white;
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: 700;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .card-password {
+            font-size: 14px;
+            color: rgba(255,255,255,0.9);
+            margin-top: 6px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+
+        .card-hover-hint {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            z-index: 3;
+        }
+
+        .card:hover .card-hover-hint {
+            opacity: 1;
+        }
+
+        .card-hover-hint .hint-password {
+            font-size: 36px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: 6px;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+        }
+
+        /* ===== CONTACT FOOTER ===== */
+        .contact {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--card-radius);
+            padding: 40px;
+            margin-top: 60px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--accent-light);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .contact-link:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+        }
+
+        .contact-link .icon {
+            font-size: 16px;
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 20px 36px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header {
+                padding: 60px 20px 40px;
+            }
+
+            .container {
+                padding: 0 16px 60px;
+            }
+
+            .card-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .contact {
+                padding: 30px 20px;
+            }
+
+            .contact-links {
+                flex-direction: column;
+            }
+
+            .topbar {
+                top: 12px;
+                right: 12px;
+            }
+
+            .lang-btn,
+            .theme-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <button class="theme-btn" id="modeIcon" onclick="toggleTheme()" title="Toggle theme">☀️</button>
+        <button class="lang-btn" onclick="setLang('auto')" title="Auto">🌐</button>
+        <button class="lang-btn" onclick="setLang('zh')" title="中文">中</button>
+        <button class="lang-btn" onclick="setLang('en')" title="English">En</button>
+        <button class="lang-btn" onclick="setLang('pt')" title="Português">Pt</button>
+    </div>
+
+    <header class="header">
+        <h1 class="logo" data-i18n="tagline">潮鞋 & 奢品精选</h1>
+        <div class="announcement" data-i18n="announcement">长按复制密码，如无法复制请手动输入</div>
+    </header>
+
+    <main class="container">
+        <!-- Shoes -->
+        <section class="category">
+            <div class="category-header">
+                <div class="category-icon">👟</div>
+                <h2 class="category-title" data-i18n="cat.shoes">潮鞋</h2>
+            </div>
+            <div class="card-grid">
+                <a class="card" href="https://sneakerheads.x.yupoo.com" target="_blank" data-pwd="888888">
+                    <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80')"></div>
+                    <div class="card-content">
+                        <div class="card-title" data-i18n="shoes.1">狠鞋合集</div>
+                        <div class="card-password" data-i18n-pwd="shoes.1.pwd">密码 888888</div>
+                    </div>
+                    <div class="card-hover-hint">
+                        <span class="hint-password" data-i18n-pwd="shoes.1.pwd">密码 888888</span>
+                    </div>
+                </a>
+                <a class="card" href="https://x.yupoo.com/photos/aj-dongli/albums?tab=gallery" target="_blank" data-pwd="888886">
+                    <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=600&q=80')"></div>
+                    <div class="card-content">
+                        <div class="card-title" data-i18n="shoes.2">球鞋图库</div>
+                        <div class="card-password" data-i18n-pwd="shoes.2.pwd">密码 888886</div>
+                    </div>
+                    <div class="card-hover-hint">
+                        <span class="hint-password" data-i18n-pwd="shoes.2.pwd">密码 888886</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Clothing -->
+        <section class="category">
+            <div class="category-header">
+                <div class="category-icon">👕</div>
+                <h2 class="category-title" data-i18n="cat.clothing">服饰</h2>
+            </div>
+            <div class="card-grid">
+                <a class="card" href="https://npccf.x.yupoo.com/" target="_blank" data-pwd="888999">
+                    <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=600&q=80')"></div>
+                    <div class="card-content">
+                        <div class="card-title" data-i18n="clothing.1">精选品质</div>
+                        <div class="card-password" data-i18n-pwd="clothing.1.pwd">密码 888999</div>
+                    </div>
+                    <div class="card-hover-hint">
+                        <span class="hint-password" data-i18n-pwd="clothing.1.pwd">密码 888999</span>
+                    </div>
+                </a>
+                <a class="card" href="https://k-kgvcch123.x.yupoo.com/albums" target="_blank" data-pwd="666888">
+                    <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&q=80')"></div>
+                    <div class="card-content">
+                        <div class="card-title" data-i18n="clothing.2">百变穿搭</div>
+                        <div class="card-password" data-i18n-pwd="clothing.2.pwd">密码 666888</div>
+                    </div>
+                    <div class="card-hover-hint">
+                        <span class="hint-password" data-i18n-pwd="clothing.2.pwd">密码 666888</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Bags -->
+        <section class="category">
+            <div class="category-header">
+                <div class="category-icon">👜</div>
+                <h2 class="category-title" data-i18n="cat.bags">奢品包袋</h2>
+            </div>
+            <div class="card-grid">
+                <a class="card" href="https://bag001.x.yupoo.com" target="_blank" data-pwd="777888">
+                    <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600&q=80')"></div>
+                    <div class="card-content">
+                        <div class="card-title" data-i18n="bags.1">品牌箱包</div>
+                        <div class="card-password" data-i18n-pwd="bags.1.pwd">密码 777888</div>
+                    </div>
+                    <div class="card-hover-hint">
+                        <span class="hint-password" data-i18n-pwd="bags.1.pwd">密码 777888</span>
+                    </div>
+                </a>
+                <a class="card" href="https://bag002.x.yupoo.com/albums" target="_blank" data-pwd="777888">
+                    <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80')"></div>
+                    <div class="card-content">
+                        <div class="card-title" data-i18n="bags.2">奢侈箱包</div>
+                        <div class="card-password" data-i18n-pwd="bags.2.pwd">密码 777888</div>
+                    </div>
+                    <div class="card-hover-hint">
+                        <span class="hint-password" data-i18n-pwd="bags.2.pwd">密码 777888</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Accessories -->
+        <section class="category">
+            <div class="category-header">
+                <div class="category-icon">⌚</div>
+                <h2 class="category-title" data-i18n="cat.accessories">配饰</h2>
+            </div>
+            <div class="card-grid">
+                <a class="card" href="https://dsmcp.x.yupoo.com" target="_blank" data-pwd="888889">
+                    <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=600&q=80')"></div>
+                    <div class="card-content">
+                        <div class="card-title" data-i18n="acc.1">平价配饰</div>
+                        <div class="card-password" data-i18n-pwd="acc.1.pwd">密码 888889</div>
+                    </div>
+                    <div class="card-hover-hint">
+                        <span class="hint-password" data-i18n-pwd="acc.1.pwd">密码 888889</span>
+                    </div>
+                </a>
+                <a class="card" href="https://jifan01.x.yupoo.com" target="_blank" data-pwd="">
+                    <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=600&q=80')"></div>
+                    <div class="card-content">
+                        <div class="card-title" data-i18n="acc.2">皮带专区</div>
+                        <div class="card-password" data-i18n-pwd="acc.2.pwd">—</div>
+                    </div>
+                    <div class="card-hover-hint">
+                        <span class="hint-password" data-i18n-pwd="acc.2.pwd">—</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <section class="contact">
+        <h3 class="contact-title" data-i18n="contact.title">联系我们</h3>
+        <div class="contact-links">
+            <a class="contact-link" href="https://t.me/xinruisneaker" target="_blank">
+                <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="#0088cc"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                <span data-i18n="contact.telegram">Telegram</span>
+            </a>
+            <a class="contact-link" href="https://wa.me/85297259272" target="_blank">
+                <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                <span>WhatsApp</span>
+            </a>
+            <a class="contact-link" href="https://s.wsxc.cn/FKDuwD">
+                <svg class="icon" viewBox="0 0 24 24" width="20" height="20"><path fill="#07C160" d="M8.5 5C5.52 5 3 7.52 3 10.5c0 1.86.94 3.49 2.38 4.5L4 18l3.27-1.76c.67.18 1.38.28 2.13.28 3.08 0 5.62-2.52 5.62-5.62S11.47 5 8.5 5zm1.5 8.3l-.5.28-.5-.28C8.24 12.64 7.63 12 7.63 12s-.6.64-1.12 1.28L6 13.82 5.5 14 2 18l4.5-2.5.5-.28c.52-.3 1.12-.82 1.5-1.38v.66l.5.28.5-.28c.38-.56.98-1.08 1.5-1.38l.5-.28.5.28c.52.3 1.12.82 1.5 1.38l.5.28-.5.28c-.52.3-1.12.82-1.5 1.38-.38.56-.98 1.08-1.5 1.38l-.5.28-.5-.28c-.52-.3-1.12-.82-1.5-1.38v-.66zm1.5-2.5c-.28 0-.5-.22-.5-.5s.22-.5.5-.5.5.22.5.5-.22.5-.5.5zm3 0c-.28 0-.5-.22-.5-.5s.22-.5.5-.5.5.22.5.5-.22.5-.5.5z"/></svg>
+                <span data-i18n="contact.wechat">WeChat</span>
+            </a>
+        </div>
+    </section>
+
+    <div class="toast" id="toast">
+        <span>✓</span>
+        <span id="toastText" data-i18n="toast.copied">密码已复制，可直接粘贴使用</span>
+    </div>
+
+    <script>
+        // ===== TRANSLATIONS =====
+        const T = {
+            zh: {
+                tagline: '潮鞋 & 奢品精选',
+                'mode.auto': '自动模式',
+                'mode.day': '白天模式',
+                'mode.night': '夜间模式',
+                'cat.shoes': '潮鞋',
+                'cat.clothing': '服饰',
+                'cat.bags': '奢品包袋',
+                'cat.accessories': '配饰',
+                'shoes.1': '狠鞋合集',
+                'shoes.2': '球鞋图库',
+                'clothing.1': '精选品质',
+                'clothing.2': '百变穿搭',
+                'bags.1': '品牌箱包',
+                'bags.2': '奢侈箱包',
+                'acc.1': '平价配饰',
+                'acc.2': '皮带专区',
+                'contact.title': '联系我们',
+                'contact.telegram': 'Telegram',
+                'contact.wechat': '微信',
+                'toast.copied': '密码已复制，可直接粘贴使用',
+                'footer.rights': '版权所有',
+                'announcement': '长按复制密码，如无法复制请手动输入',
+                'shoes.1.pwd': '密码 888888',
+                'shoes.2.pwd': '密码 888886',
+                'clothing.1.pwd': '密码 888999',
+                'clothing.2.pwd': '密码 666888',
+                'bags.1.pwd': '密码 777888',
+                'bags.2.pwd': '密码 777888',
+                'acc.1.pwd': '密码 888889',
+                'acc.2.pwd': '—'
+            },
+            en: {
+                tagline: 'Premium Sneakers & Fashion',
+                'mode.auto': 'Auto Mode',
+                'mode.day': 'Day Mode',
+                'mode.night': 'Night Mode',
+                'cat.shoes': 'Shoes',
+                'cat.clothing': 'Clothing',
+                'cat.bags': 'Luxury Bags',
+                'cat.accessories': 'Accessories',
+                'shoes.1': 'Top Kicks',
+                'shoes.2': 'Sneaker Gallery',
+                'clothing.1': 'Curated Picks',
+                'clothing.2': 'Style Edit',
+                'bags.1': 'Brand Bags',
+                'bags.2': 'Luxury Bags',
+                'acc.1': 'Affordable Accents',
+                'acc.2': 'Belt Zone',
+                'contact.title': 'Contact Us',
+                'contact.telegram': 'Telegram',
+                'contact.wechat': 'WeChat',
+                'toast.copied': 'Password copied! Paste to use.',
+                'footer.rights': 'All rights reserved',
+                'announcement': 'Long press to copy password, or enter manually',
+                'shoes.1.pwd': 'PWD 888888',
+                'shoes.2.pwd': 'PWD 888886',
+                'clothing.1.pwd': 'PWD 888999',
+                'clothing.2.pwd': 'PWD 666888',
+                'bags.1.pwd': 'PWD 777888',
+                'bags.2.pwd': 'PWD 777888',
+                'acc.1.pwd': 'PWD 888889',
+                'acc.2.pwd': '—'
+            },
+            pt: {
+                tagline: 'Tênis & Moda Premium',
+                'mode.auto': 'Modo Auto',
+                'mode.day': 'Modo Dia',
+                'mode.night': 'Modo Noite',
+                'cat.shoes': 'Sapatos',
+                'cat.clothing': 'Roupas',
+                'cat.bags': 'Bolsas de Luxo',
+                'cat.accessories': 'Acessórios',
+                'shoes.1': 'Top Tênis',
+                'shoes.2': 'Galeria de Tênis',
+                'clothing.1': 'Melhores Escolhas',
+                'clothing.2': 'Estilo & Look',
+                'bags.1': 'Bolsas de Marca',
+                'bags.2': 'Bolsas de Luxo',
+                'acc.1': 'Acessórios Populares',
+                'acc.2': 'Zona de Cintos',
+                'contact.title': 'Contato',
+                'contact.telegram': 'Telegram',
+                'contact.wechat': 'WeChat',
+                'toast.copied': 'Senha copiada!',
+                'footer.rights': 'Todos os direitos reservados',
+                'announcement': 'Segure para copiar a senha, ou digite manualmente',
+                'shoes.1.pwd': 'SENHA 888888',
+                'shoes.2.pwd': 'SENHA 888886',
+                'clothing.1.pwd': 'SENHA 888999',
+                'clothing.2.pwd': 'SENHA 666888',
+                'bags.1.pwd': 'SENHA 777888',
+                'bags.2.pwd': 'SENHA 777888',
+                'acc.1.pwd': 'SENHA 888889',
+                'acc.2.pwd': '—'
+            }
+        };
+
+        // ===== THEME MANAGEMENT =====
+        function getAutoTheme() {
+            const hour = new Date().getHours();
+            return (hour >= 6 && hour < 18) ? 'light' : 'dark';
+        }
+
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            const icon = document.getElementById('modeIcon');
+
+            if (theme === 'dark') {
+                icon.textContent = '🌙';
+            } else if (theme === 'light') {
+                icon.textContent = '☀️';
+            } else {
+                icon.textContent = '🌀';
+            }
+        }
+
+        function initTheme() {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'auto' || !saved) {
+                const visualTheme = getAutoTheme();
+                document.documentElement.setAttribute('data-theme', visualTheme);
+                document.getElementById('modeIcon').textContent = '🌀';
+                localStorage.setItem('theme', 'auto');
+            } else {
+                applyTheme(saved);
+            }
+        }
+
+        function toggleTheme() {
+            const current = localStorage.getItem('theme') || 'auto';
+            let next;
+            if (current === 'auto') {
+                next = 'light';
+            } else if (current === 'light') {
+                next = 'dark';
+            } else {
+                next = 'auto';
+            }
+            localStorage.setItem('theme', next);
+            if (next === 'auto') {
+                applyTheme(getAutoTheme());
+            } else {
+                applyTheme(next);
+            }
+        }
+
+        // ===== LANGUAGE MANAGEMENT =====
+        let lang = 'en';
+
+        function detectLang() {
+            const saved = localStorage.getItem('lang');
+            if (saved && saved !== 'auto') return saved;
+            const browser = navigator.language.toLowerCase();
+            if (browser.startsWith('zh')) return 'zh';
+            if (browser.startsWith('pt')) return 'pt';
+            return 'en';
+        }
+
+        function applyLang(l) {
+            lang = l;
+            document.documentElement.lang = l;
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (T[l] && T[l][key]) {
+                    el.textContent = T[l][key];
+                }
+            });
+
+            document.querySelectorAll('[data-i18n-pwd]').forEach(el => {
+                const key = el.dataset.i18nPwd;
+                if (T[l] && T[l][key]) {
+                    el.textContent = T[l][key];
+                }
+            });
+
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.lang-btn[onclick="setLang('${l}')"]`)?.classList.add('active');
+
+            const theme = localStorage.getItem('theme') || 'auto';
+            if (theme !== 'auto') applyTheme(theme);
+        }
+
+        function setLang(newLang) {
+            localStorage.setItem('lang', newLang);
+            applyLang(newLang === 'auto' ? detectLang() : newLang);
+        }
+
+        // ===== COPY FUNCTIONALITY =====
+        function showToast() {
+            const toast = document.getElementById('toast');
+            const toastText = document.getElementById('toastText');
+            toastText.textContent = T[lang]['toast.copied'];
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        document.querySelectorAll('a[data-pwd]').forEach(link => {
+            link.addEventListener('click', async (e) => {
+                e.preventDefault();
+                const pwd = link.dataset.pwd;
+                const url = link.href;
+
+                try {
+                    await navigator.clipboard.writeText(pwd);
+                } catch {
+                    const ta = document.createElement('textarea');
+                    ta.value = pwd;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                }
+
+                showToast();
+                window.open(url, '_blank');
+            });
+        });
+
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', () => {
+            lang = detectLang();
+            initTheme();
+            applyLang(lang);
+
+            setInterval(() => {
+                if (localStorage.getItem('theme') === 'auto') {
+                    applyTheme(getAutoTheme());
+                }
+            }, 60000);
+        });
+    </script>
+</body>
+</html>
